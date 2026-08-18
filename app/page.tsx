@@ -1,6 +1,7 @@
 import { Hero } from "@/components/Hero/Hero";
 import { Featured } from "@/components/Featured/Featured";
 import { Gallery } from "@/components/Gallery/Gallery";
+import { Craft } from "@/components/Craft/Craft";
 import { Testimonials } from "@/components/Testimonials/Testimonials";
 import { Footer } from "@/components/Footer/Footer";
 export default function Home() {
@@ -8,6 +9,7 @@ export default function Home() {
     <main>
       <Hero />
       <Featured />
+      <Craft />
       <Gallery />
       <Testimonials />
       <Footer />

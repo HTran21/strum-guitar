@@ -22,8 +22,7 @@ export function GuitarScene() {
   }
   return (
     <div
-      // className="relative mx-auto h-full w-full select-none overflow-hidden [mask-image:linear-gradient(to_bottom,transparent_0%,black_11%,black_76%,transparent_100%)] border-red"
-      className="relative mx-auto h-full w-full select-none overflow-hidden [mask-image:linear-gradient(to_bottom,transparent_0%,black_11%,black_76%,transparent_100%)]"
+      className="relative mx-auto h-full w-full select-none overflow-hidden [mask-image:linear-gradient(to_bottom,transparent_0%,black_26%,black_76%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,transparent_0%,black_26%,black_76%,transparent_100%)]"
       aria-label="Interactive acoustic guitar. Hold and drag across the strings to play."
     >
       <img

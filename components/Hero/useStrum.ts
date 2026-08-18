@@ -11,7 +11,7 @@ export const STRING_SEGMENTS: Segment[] = [
   { from: { x: 506, y: 76 }, to: { x: 510, y: 1214 } },
   { from: { x: 492, y: 76 }, to: { x: 492, y: 1214 } },
   { from: { x: 480, y: 76 }, to: { x: 475, y: 1214 } },
-  { from: { x: 470, y: 76 }, to: { x: 458, y: 1214 } },
+  { from: { x: 470, y: 76 }, to: { x: 457, y: 1214 } },
 ];
 function intersection(a: Point, b: Point, segment: Segment) {
   const rx = b.x - a.x,
