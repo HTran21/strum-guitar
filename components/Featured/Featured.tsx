@@ -157,14 +157,13 @@ const products: Record<Category, Product[]> = {
 };
 export function Featured() {
   const [category, setCategory] = useState<Category>("guitars");
-  const { locale } = useLanguage();
+  const { t } = useLanguage();
   const reduced = useReducedMotion();
-  const vi = locale === "vi";
   const labels: Record<Category, string> = {
-    guitars: vi ? "GUITAR" : "GUITARS",
-    pianos: vi ? "PIANO" : "PIANOS",
-    ukuleles: "UKULELES",
-    accessories: vi ? "PHỤ KIỆN" : "ACCESSORIES",
+    guitars: t.featured.categories.guitars,
+    pianos: t.featured.categories.pianos,
+    ukuleles: t.featured.categories.ukuleles,
+    accessories: t.featured.categories.accessories,
   };
   return (
     <section id="collection" className="section">
@@ -176,10 +175,10 @@ export function Featured() {
         className="mb-9 flex flex-wrap items-end justify-between gap-5"
       >
         <div>
-          <p className="eyebrow">{vi ? "BỘ SƯU TẬP" : "THE COLLECTION"}</p>
+          <p className="eyebrow">{t.featured.eyebrow}</p>
           <h2 className="mt-3 font-display text-5xl md:text-6xl">
-            {vi ? "Dành cho " : "Made for your "}
-            <i className="text-gold">{vi ? "âm thanh của bạn." : "sound."}</i>
+            {t.featured.titleBefore}
+            <i className="text-gold">{t.featured.titleAccent}</i>
           </h2>
         </div>
       </motion.div>
@@ -219,43 +218,51 @@ export function Featured() {
           transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
           className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
         >
-          {products[category].map((product, index) => (
-            <motion.article
-              key={product.name}
-              initial={reduced ? false : { opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.07, duration: 0.48, ease: [0.22, 1, 0.36, 1] }}
-              className="group overflow-hidden rounded-2xl border border-white/5 bg-surface transition-colors hover:border-gold/40 hover:bg-[#19191b]"
-            >
-              <div
-                className={`relative h-64 overflow-hidden bg-gradient-to-br ${product.tone}`}
+          {products[category].map((product, index) => {
+            const [name, type, description] =
+              t.featured.products[category][index];
+            return (
+              <motion.article
+                key={product.name}
+                initial={reduced ? false : { opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  delay: index * 0.07,
+                  duration: 0.48,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+                className="group overflow-hidden rounded-2xl border border-white/5 bg-surface transition-colors hover:border-gold/40 hover:bg-[#19191b]"
               >
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="h-full w-full object-contain p-5 transition duration-500 group-hover:scale-105 group-hover:-translate-y-1"
-                />
-                <span className="absolute bottom-4 left-4 text-xs uppercase tracking-widest text-white/60">
-                  {product.type}
-                </span>
-              </div>
-              <div className="p-5">
-                <div className="flex justify-between gap-2">
-                  <h3 className="font-display text-2xl">{product.name}</h3>
-                  <span className="text-gold">{product.price}</span>
-                </div>
-                <p className="mt-3 min-h-11 text-sm leading-5 text-muted">
-                  {product.description}
-                </p>
-                <button className="mt-5 text-sm font-bold text-cream transition hover:text-gold">
-                  {vi ? "Xem chi tiết" : "View Details"}{" "}
-                  <span className="ml-2 inline-block transition-transform group-hover:translate-x-1">
-                    →
+                <div
+                  className={`relative h-64 overflow-hidden bg-gradient-to-br ${product.tone}`}
+                >
+                  <img
+                    src={product.image}
+                    alt={name}
+                    className="h-full w-full object-contain p-5 transition duration-500 group-hover:scale-105 group-hover:-translate-y-1"
+                  />
+                  <span className="absolute bottom-4 left-4 text-xs uppercase tracking-widest text-white/60">
+                    {type}
                   </span>
-                </button>
-              </div>
-            </motion.article>
-          ))}
+                </div>
+                <div className="p-5">
+                  <div className="flex justify-between gap-2">
+                    <h3 className="font-display text-2xl">{name}</h3>
+                    <span className="text-gold">{product.price}</span>
+                  </div>
+                  <p className="mt-3 min-h-11 text-sm leading-5 text-muted">
+                    {description}
+                  </p>
+                  <button className="mt-5 text-sm font-bold text-cream transition hover:text-gold">
+                    {t.featured.details}{" "}
+                    <span className="ml-2 inline-block transition-transform group-hover:translate-x-1">
+                      →
+                    </span>
+                  </button>
+                </div>
+              </motion.article>
+            );
+          })}
         </motion.div>
       </AnimatePresence>
     </section>

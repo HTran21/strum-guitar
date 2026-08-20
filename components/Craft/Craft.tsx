@@ -1,25 +1,13 @@
 "use client";
+
 import { motion, useReducedMotion } from "framer-motion";
 import { useLanguage } from "@/components/LanguageProvider";
+
 export function Craft() {
-  const { locale } = useLanguage();
-  const vi = locale === "vi";
+  const { t } = useLanguage();
   const reduced = useReducedMotion();
-  const copy = vi
-    ? {
-        eyebrow: "NGHỆ THUẬT CHẾ TÁC",
-        one: "Từ gỗ,",
-        two: "thành âm thanh.",
-        body: "Mỗi nhạc cụ bắt đầu bằng những tấm gỗ được tuyển chọn và hoàn thiện bởi những người thấu hiểu điều người chơi lắng nghe.",
-        link: "Khám phá nghệ thuật chế tác",
-      }
-    : {
-        eyebrow: "THE CRAFT",
-        one: "Built from wood,",
-        two: "shaped by sound.",
-        body: "Every instrument begins with carefully selected tonewoods and is finished by people who understand what musicians listen for.",
-        link: "Explore our craft",
-      };
+  const copy = t.craft;
+
   return (
     <section id="craft" className="relative overflow-hidden bg-[#0f0e0d]">
       <div className="section relative">

@@ -25,7 +25,7 @@ const benefits = [
   ["◉", "Expert Support", "We're here for\nyour music"],
 ];
 export function Hero() {
-  const { locale, setLocale, text } = useLanguage();
+  const { locale, setLocale, t } = useLanguage();
   const reduced = useReducedMotion();
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
@@ -35,18 +35,18 @@ export function Hero() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
   const benefits = [
-    ["♢", ...text.quality],
-    ["▥", ...text.wood],
-    ["⌁", ...text.setup],
-    ["◉", ...text.support],
+    ["♢", ...t.hero.benefits[0]],
+    ["▥", ...t.hero.benefits[1]],
+    ["⌁", ...t.hero.benefits[2]],
+    ["◉", ...t.hero.benefits[3]],
   ];
   const strings = [
-    ["1", "E₄", text.thin],
+    ["1", "E₄", t.hero.thin],
     ["2", "B3", ""],
     ["3", "G3", ""],
     ["4", "D3", ""],
     ["5", "A2", ""],
-    ["6", "E2", text.thick],
+    ["6", "E2", t.hero.thick],
   ];
   return (
     <section
@@ -79,15 +79,19 @@ export function Hero() {
           <motion.div
             initial={reduced ? false : { opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.12, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            transition={{
+              delay: 0.12,
+              duration: 0.6,
+              ease: [0.22, 1, 0.36, 1],
+            }}
             className="hidden gap-9 text-[13px] font-medium tracking-[.02em] text-white/70 lg:flex"
           >
             {[
-              ["#collection", locale === "vi" ? "Bộ sưu tập" : "Collection"],
-              ["#craft", locale === "vi" ? "Chế tác" : "Craft"],
-              ["#sound", locale === "vi" ? "Âm thanh" : "Sound"],
-              ["#stories", locale === "vi" ? "Câu chuyện" : "Stories"],
-              ["#about", locale === "vi" ? "Về chúng tôi" : "About"],
+              ["#collection", t.nav.collection],
+              ["#craft", t.nav.craft],
+              ["#sound", t.nav.sound],
+              ["#stories", t.nav.stories],
+              ["#about", t.nav.about],
             ].map(([href, label]) => (
               <a
                 key={href}
@@ -115,7 +119,7 @@ export function Hero() {
               href="#collection"
               className={`${headerLora.className} group hidden items-center gap-3 text-[13px] font-semibold text-gold transition hover:text-[#f0c781] sm:inline-flex`}
             >
-              Explore Instruments
+              {t.nav.explore}
               <span className="transition-transform duration-300 group-hover:translate-x-1">
                 →
               </span>
@@ -131,7 +135,7 @@ export function Hero() {
             transition={{ delay: 0.15 }}
             className="eyebrow"
           >
-            {text.eyebrow}
+            {t.hero.eyebrow}
           </motion.p>
           <motion.h1
             initial={{ opacity: 0, y: 34 }}
@@ -139,9 +143,9 @@ export function Hero() {
             transition={{ type: "spring", stiffness: 65, delay: 0.2 }}
             className="mt-5 font-display text-[3.6rem] leading-[.91] tracking-tight sm:text-7xl"
           >
-            {text.before}
+            {t.hero.before}
             <br />
-            <i className="text-gold">{text.buy}</i>
+            <i className="text-gold">{t.hero.buy}</i>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 16 }}
@@ -149,12 +153,16 @@ export function Hero() {
             transition={{ delay: 0.45 }}
             className="mt-6 max-w-[340px] text-sm leading-6 text-muted"
           >
-            {text.intro}
+            {t.hero.intro}
           </motion.p>
           <motion.div
             initial={reduced ? false : { opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.62, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            transition={{
+              delay: 0.62,
+              duration: 0.55,
+              ease: [0.22, 1, 0.36, 1],
+            }}
             className="mt-7 flex items-center gap-6"
           >
             <motion.a
@@ -162,22 +170,26 @@ export function Hero() {
               href="#collection"
               className="rounded-full bg-gold px-6 py-3 text-sm font-bold text-[#16100a]"
             >
-              {text.shop} <span className="ml-3">›</span>
+              {t.hero.shop} <span className="ml-3">›</span>
             </motion.a>
             <button className="flex items-center gap-3 text-sm text-gold">
               <span className="grid h-10 w-10 place-items-center rounded-full border border-gold text-xs">
                 ▶
               </span>
-              {text.watch}
+              {t.hero.watch}
             </button>
           </motion.div>
           <motion.p
             initial={reduced ? false : { opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.74, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            transition={{
+              delay: 0.74,
+              duration: 0.5,
+              ease: [0.22, 1, 0.36, 1],
+            }}
             className="mt-5 text-[10px] font-bold uppercase tracking-[.16em] text-muted"
           >
-            {text.hold}
+            {t.hero.hold}
           </motion.p>
         </div>
         <motion.div
@@ -220,7 +232,11 @@ export function Hero() {
               key={note}
               initial={reduced ? false : { opacity: 0, x: 12 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.92 + index * 0.06, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+              transition={{
+                delay: 0.92 + index * 0.06,
+                duration: 0.45,
+                ease: [0.22, 1, 0.36, 1],
+              }}
               className="relative flex items-center gap-3 text-xs before:absolute before:right-[calc(100%+12px)] before:top-1/2 before:h-px before:w-[190px] before:-translate-y-1/2 before:bg-gradient-to-r before:from-gold/0 before:via-gold/35 before:to-gold/70"
             >
               <span className="grid h-5 w-5 place-items-center rounded-full bg-[#e6c18d] text-[10px] font-bold text-ink">
@@ -237,7 +253,11 @@ export function Hero() {
               key={title}
               initial={reduced ? false : { opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.08 + index * 0.07, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+              transition={{
+                delay: 1.08 + index * 0.07,
+                duration: 0.45,
+                ease: [0.22, 1, 0.36, 1],
+              }}
               className="w-[125px] border-r border-white/10 px-4 first:pl-0 last:border-0"
             >
               <div className="text-2xl text-gold">{icon}</div>
@@ -256,11 +276,11 @@ export function Hero() {
         >
           <div className="text-4xl text-gold">☝</div>
           <p className="mt-4 text-xs font-bold uppercase tracking-[.1em] text-gold">
-            {text.drag}
+            {t.hero.drag}
             <br />
             the strings
           </p>
-          <p className="mt-3 text-xs leading-5 text-muted">{text.dragInfo}</p>
+          <p className="mt-3 text-xs leading-5 text-muted">{t.hero.dragInfo}</p>
         </motion.div>
         <motion.div
           initial={reduced ? false : { opacity: 0, scale: 0.97, y: 22 }}

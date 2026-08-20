@@ -4,35 +4,11 @@ import { motion, useReducedMotion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { useLanguage } from "@/components/LanguageProvider";
 
-const samples = [
-  {
-    en: "Ember / Open room",
-    enCaption: "Mahogany · fingerstyle",
-    vi: "Ember / Phòng mộc",
-    viCaption: "Gỗ gụ · fingerstyle",
-    src: "/audio/guitar_sound/Acoustic_Guitar_Sound_Effect.mp3",
-  },
-  {
-    en: "Nova 61 / Glass",
-    enCaption: "Alnico pickups · clean",
-    vi: "Nova 61 / Trong trẻo",
-    viCaption: "Pickup Alnico · clean",
-    src: "/audio/guitar_sound/Electric_Guitar_Sound_Effect.mp3",
-  },
-  {
-    en: "Luna / Sunlight",
-    enCaption: "Cedar top · nylon",
-    vi: "Luna / Ánh nắng",
-    viCaption: "Mặt gỗ cedar · dây nylon",
-    src: "/audio/guitar_sound/Classic_Guitar_Sound_Effect.mp3",
-  },
-  {
-    en: "Tide / Island air",
-    enCaption: "Ukulele · bright",
-    vi: "Tide / Hơi thở đảo xa",
-    viCaption: "Ukulele · tươi sáng",
-    src: "/audio/guitar_sound/Ukulele_Melody.mp3",
-  },
+const audioSources = [
+  "/audio/guitar_sound/Acoustic_Guitar_Sound_Effect.mp3",
+  "/audio/guitar_sound/Electric_Guitar_Sound_Effect.mp3",
+  "/audio/guitar_sound/Classic_Guitar_Sound_Effect.mp3",
+  "/audio/guitar_sound/Ukulele_Melody.mp3",
 ];
 
 function Waveform({ playing }: { playing: boolean }) {
@@ -53,11 +29,11 @@ function Waveform({ playing }: { playing: boolean }) {
 }
 
 export function Gallery() {
-  const { locale } = useLanguage();
+  const { t } = useLanguage();
   const reduced = useReducedMotion();
-  const vi = locale === "vi";
   const [playing, setPlaying] = useState<number | null>(null);
   const audio = useRef<HTMLAudioElement | null>(null);
+  const copy = t.gallery;
   useEffect(() => () => audio.current?.pause(), []);
   async function select(index: number) {
     if (playing === index) {
@@ -66,7 +42,7 @@ export function Gallery() {
       return;
     }
     audio.current?.pause();
-    const next = new Audio(samples[index].src);
+    const next = new Audio(audioSources[index]);
     audio.current = next;
     next.addEventListener("ended", () =>
       setPlaying((current) => (current === index ? null : current)),
@@ -88,23 +64,15 @@ export function Gallery() {
     <section id="sound" className="bg-[#101012]">
       <div className="section grid gap-12 lg:grid-cols-[.8fr_1.2fr]">
         <motion.div {...reveal}>
-          <p className="eyebrow">
-            {vi ? "Thư viện âm thanh" : "Sound library"}
-          </p>
+          <p className="eyebrow">{copy.eyebrow}</p>
           <h2 className="mt-3 font-display text-5xl leading-none md:text-6xl">
-            {vi ? "Tìm " : "Find your "}
-            <i className="text-gold">
-              {vi ? "nốt nhạc đầu tiên." : "first note."}
-            </i>
+            {copy.before}
+            <i className="text-gold">{copy.accent}</i>
           </h2>
-          <p className="mt-6 max-w-sm leading-7 text-muted">
-            {vi
-              ? "Mỗi mẫu đàn được thu âm tỉ mỉ trong phòng nghe chuyên dụng của chúng tôi. Hãy nhấn phát, nhắm mắt lại và biến không gian quanh bạn thành buổi hòa nhạc riêng."
-              : "Every model is meticulously recorded in our custom-built listening room. Just press play, close your eyes, and transform your surroundings into your own personal concert hall."}
-          </p>
+          <p className="mt-6 max-w-sm leading-7 text-muted">{copy.body}</p>
           <div className="mt-10 flex items-center gap-2">
             <span className="text-sm font-bold text-gold">
-              {vi ? "NÊN DÙNG TAI NGHE" : "HEADPHONES RECOMMENDED"}
+              {copy.headphones}
             </span>
             <img
               src="/images/icon/headphone-symbol.png"
@@ -114,9 +82,9 @@ export function Gallery() {
           </div>
         </motion.div>
         <div className="space-y-3">
-          {samples.map((sample, index) => (
+          {copy.samples.map(([name, caption], index) => (
             <motion.button
-              key={sample.en}
+              key={audioSources[index]}
               initial={reduced ? false : { opacity: 0, x: 16 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, amount: 0.2 }}
@@ -133,11 +101,9 @@ export function Gallery() {
                 {playing === index ? "Ⅱ" : "▶"}
               </span>
               <div className="min-w-0 flex-1">
-                <h3 className="font-display text-xl">
-                  {vi ? sample.vi : sample.en}
-                </h3>
+                <h3 className="font-display text-xl">{name}</h3>
                 <p className="mt-1 text-xs uppercase tracking-wider text-muted">
-                  {vi ? sample.viCaption : sample.enCaption}
+                  {caption}
                 </p>
               </div>
               <Waveform playing={playing === index} />
